@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+.env
+.venv
+env/
+ENV/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Data files
+*.xlsx
+*.csv
+temp_*.xlsx
+bao_cao_so_dien.xlsx
+
+# Logs
+*.log
+
+# Local configuration
+config.ini
+secrets.json
+
+# Streamlit
+.streamlit/
+
+# Temporary files
+temp/
