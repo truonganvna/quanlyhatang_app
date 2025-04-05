@@ -1,8 +1,5 @@
-file_path = '/content/test.xlsx'
-
-
-def quan_ly_ha_tang_electric(file_path):
-    df = pd.read_excel(file_path, skiprows=2)
+def quan_ly_ha_tang_electric(file_input):
+    df = pd.read_excel(file_input, skiprows=2)
     df = df.set_index("Địa chỉ")
 
     # I. Phần dịch vụ
