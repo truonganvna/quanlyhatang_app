@@ -29,7 +29,7 @@ def main():
         trung_binh_df = sheet_df_dict['Trung bình'][0]
         tieu_thu_df = sheet_df_dict['Tiêu thụ'][0]
 
-        # Hiển thị dữ liệu theo tab - thêm tab "Tiêu thụ"
+        # Hiển thị dữ liệu theo tab
         tab1, tab2, tab3, tab4, tab5 = st.tabs(["Dữ liệu chính", "Dịch vụ", "Tổng hợp", "Trung bình", "Tiêu thụ"])
 
         with tab1:
@@ -39,8 +39,11 @@ def main():
             # Biểu đồ cho dữ liệu chính
             if not df.empty and df.shape[1] > 6:
                 st.subheader("Biểu đồ tiêu thụ điện")
-                fig = px.bar(df.iloc[:10], y=df.columns[6], title="Top 10 địa điểm tiêu thụ điện")
-                st.plotly_chart(fig)
+                try:
+                    fig = px.bar(df.iloc[:10], y="D", title="Top 10 địa điểm tiêu thụ điện")
+                    st.plotly_chart(fig)
+                except Exception as e:
+                    st.write(f"Không thể tạo biểu đồ: {str(e)}")
 
         with tab2:
             st.header("Dịch vụ")
@@ -59,12 +62,23 @@ def main():
             try:
                 st.subheader(f"Phân bổ tiêu thụ điện: {selected_service}")
 
-                # Lọc dòng tổng để hiển thị trong biểu đồ
-                service_data = selected_df[selected_df["Stt"] != "Tổng:"]
+                # Lọc dòng không phải dòng tổng
+                service_data = selected_df[selected_df["Stt"] != "Tổng:"].copy()
+
                 if "Thanh toán (KWh)" in service_data.columns:
-                    fig = px.pie(service_data, values="Thanh toán (KWh)", names="Địa chỉ",
-                                 title=f"Phân bổ tiêu thụ điện: {selected_service}")
-                    st.plotly_chart(fig)
+                    # Chuyển đổi sang số để tránh lỗi
+                    service_data["Thanh toán (KWh)"] = pd.to_numeric(service_data["Thanh toán (KWh)"], errors='coerce')
+                    service_data = service_data.dropna(subset=["Thanh toán (KWh)"])
+
+                    if not service_data.empty:
+                        fig = px.pie(service_data, values="Thanh toán (KWh)", names="Địa chỉ",
+                                     title=f"Phân bổ tiêu thụ điện: {selected_service}")
+                        st.plotly_chart(fig)
+                    else:
+                        st.write("Không đủ dữ liệu để hiển thị biểu đồ")
+                else:
+                    st.write("Không tìm thấy cột 'Thanh toán (KWh)' trong dữ liệu")
+
             except Exception as e:
                 st.write(f"Không thể tạo biểu đồ: {str(e)}")
 
@@ -75,11 +89,20 @@ def main():
             # Biểu đồ cho tổng hợp
             st.subheader("So sánh tiêu thụ điện theo địa điểm")
             try:
-                # Lấy dữ liệu không bao gồm dòng tổng
-                chart_data = tong_hop_df.iloc[:-1]
-                fig = px.bar(chart_data, x="Địa chỉ", y="Sản lượng tuần mới (kWh)",
-                             title="Tiêu thụ điện theo địa điểm")
-                st.plotly_chart(fig)
+                # Lọc dữ liệu cho biểu đồ, bỏ dòng tổng
+                chart_data = tong_hop_df[tong_hop_df["Stt"] < 21].copy()
+
+                # Chuyển đổi sang số để tránh lỗi
+                chart_data["Sản lượng tuần mới (kWh)"] = pd.to_numeric(chart_data["Sản lượng tuần mới (kWh)"],
+                                                                       errors='coerce')
+                chart_data = chart_data.dropna(subset=["Sản lượng tuần mới (kWh)"])
+
+                if not chart_data.empty:
+                    fig = px.bar(chart_data, x="Địa chỉ", y="Sản lượng tuần mới (kWh)",
+                                 title="Tiêu thụ điện theo địa điểm")
+                    st.plotly_chart(fig)
+                else:
+                    st.write("Không đủ dữ liệu để hiển thị biểu đồ")
             except Exception as e:
                 st.write(f"Không thể tạo biểu đồ tổng hợp: {str(e)}")
 
@@ -92,12 +115,21 @@ def main():
             try:
                 # Lấy dữ liệu TB tuần từ MultiIndex DataFrame
                 tb_tuan_data = pd.DataFrame()
-                for col in trung_binh_df.columns.levels[0]:
-                    if 'TB tuần' in trung_binh_df[col].columns:
-                        tb_tuan_data[col] = trung_binh_df[col]['TB tuần']
 
-                fig = px.line(tb_tuan_data.iloc[:-1], title="Tiêu thụ điện trung bình theo tuần")
-                st.plotly_chart(fig)
+                # Lấy tất cả cột cấp đầu tiên
+                first_level_cols = trung_binh_df.columns.get_level_values(0).unique()
+
+                for col in first_level_cols:
+                    # Lấy giá trị TB tuần cho mỗi cột
+                    if 'TB tuần' in trung_binh_df[col].columns:
+                        # Bỏ hàng cuối cùng (Tổng cộng)
+                        tb_tuan_data[col] = trung_binh_df[col]['TB tuần'].iloc[:-1]
+
+                if not tb_tuan_data.empty:
+                    fig = px.line(tb_tuan_data, title="Tiêu thụ điện trung bình theo tuần")
+                    st.plotly_chart(fig)
+                else:
+                    st.write("Không có dữ liệu trung bình tuần")
             except Exception as e:
                 st.write(f"Không thể tạo biểu đồ trung bình: {str(e)}")
 
@@ -108,10 +140,17 @@ def main():
             # Biểu đồ cho tiêu thụ
             st.subheader("Phân bổ tiêu thụ điện")
             try:
-                if "Tiêu thụ (KWh)" in tieu_thu_df.columns:
-                    fig = px.pie(tieu_thu_df, values="Tiêu thụ (KWh)", names="Địa điểm",
+                # Chuyển đổi sang số để tránh lỗi
+                tieuthu_data = tieu_thu_df.copy()
+                tieuthu_data["Tiêu thụ (KWh)"] = pd.to_numeric(tieuthu_data["Tiêu thụ (KWh)"], errors='coerce')
+                tieuthu_data = tieuthu_data.dropna(subset=["Tiêu thụ (KWh)"])
+
+                if not tieuthu_data.empty:
+                    fig = px.pie(tieuthu_data, values="Tiêu thụ (KWh)", names="Địa điểm",
                                  title="Phân bổ lượng điện tiêu thụ")
                     st.plotly_chart(fig)
+                else:
+                    st.write("Không đủ dữ liệu để hiển thị biểu đồ")
             except Exception as e:
                 st.write(f"Không thể tạo biểu đồ tiêu thụ: {str(e)}")
 
