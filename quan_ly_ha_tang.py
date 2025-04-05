@@ -1,3 +1,16 @@
+import numpy as np
+import pandas as pd
+import openpyxl
+from openpyxl import Workbook
+from openpyxl import load_workbook
+from openpyxl.styles import Border, Side, Alignment, PatternFill, Font
+from openpyxl.utils import get_column_letter
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+import xlsxwriter
+import io
+
 def quan_ly_ha_tang_electric(file_input):
     df = pd.read_excel(file_input, skiprows=2)
     df = df.set_index("Địa chỉ")
