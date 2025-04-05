@@ -162,6 +162,8 @@ def main():
                 with open(temp_path, "rb") as f:
                     excel_data = f.read()
 
+                st.success("Đã tạo file báo cáo thành công!")
+
                 st.download_button(
                     label="Tải xuống báo cáo Excel",
                     data=excel_data,
