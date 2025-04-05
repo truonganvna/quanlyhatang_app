@@ -14,13 +14,8 @@ def main():
     uploaded_file = st.file_uploader("Tải lên file Excel", type=["xlsx"])
 
     if uploaded_file is not None:
-        # Lưu file tạm thời
-        file_path = "temp_data.xlsx"
-        with open(file_path, "wb") as f:
-            f.write(uploaded_file.getbuffer())
-
-        # Xử lý dữ liệu
-        sheet_df_dict, titles_dict = quan_ly_ha_tang_electric(file_path)
+        # Pass the uploaded file directly to the function
+        sheet_df_dict, titles_dict = quan_ly_ha_tang_electric(uploaded_file)
 
         # Lấy các DataFrame từ sheet_df_dict
         df = sheet_df_dict['Dữ liệu nhập'][0]
@@ -154,19 +149,22 @@ def main():
             except Exception as e:
                 st.write(f"Không thể tạo biểu đồ tiêu thụ: {str(e)}")
 
-        # Tạo nút tải xuống báo cáo sử dụng hàm mới
+        # Tạo nút tải xuống báo cáo
         if st.button("Tạo báo cáo Excel"):
-            output_path = "bao_cao_so_dien.xlsx"
+            # Sử dụng tempfile để tạo file tạm thời
+            import tempfile
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as tmp:
+                temp_path = tmp.name
+                # Sử dụng hàm export với đường dẫn tạm
+                export_excel_formatted_fixed(sheet_df_dict, titles_dict, temp_path)
 
-            # Sử dụng hàm export_excel_formatted_fixed với cấu trúc mới
-            export_excel_formatted_fixed(sheet_df_dict, titles_dict, output_path)
+                # Đọc file để tải xuống
+                with open(temp_path, "rb") as f:
+                    excel_data = f.read()
 
-            st.success("Đã tạo báo cáo Excel thành công! File: bao_cao_so_dien.xlsx")
-
-            with open(output_path, "rb") as file:
                 st.download_button(
                     label="Tải xuống báo cáo Excel",
-                    data=file,
+                    data=excel_data,
                     file_name="bao_cao_so_dien.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
