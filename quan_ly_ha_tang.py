@@ -547,7 +547,7 @@ def quan_ly_ha_tang_electric(file_input):
                           df_phong_truyen_thong_t10_frame_total, df_hoitruong_t10_frame_total,
                           df_t11_frame_total, df_led_frame_total, df_vnnews_frame_total, dv_21pdh, dv_baoviet_t5,
                           df_mb_hoankiem_frame_total, df_gme_frame_total, df_giovani_frame_total,
-                          fbs_t12, df_vna8_pgb_frame_total, df_vna8_vp_frame.loc[2, "Thanh toán (KWh)"], dv_5ltk,
+                          fbs_t12, df_vna8_pgb_frame_total, df_vna8_vp_frame.loc[1, "Thanh toán (KWh)"], dv_5ltk,
                           dv_79ltk, dv_33ltt, dv_11thd]
 
     df_tong_hop_frame.loc[:19, 'Sản lượng tuần mới (kWh)'] = service_total_list
