@@ -616,7 +616,7 @@ def quan_ly_ha_tang_electric(file_input):
     df_tieu_thu_frame.loc[0, "Tiêu thụ (KWh)"] = df_vna8_total
     df_tieu_thu_frame.loc[1, "Tiêu thụ (KWh)"] = total_service
     df_tieu_thu_frame.loc[2, "Tiêu thụ (KWh)"] = df.loc["Tổng cộng", "D"]
-    df_tieu_thu_frame.loc[3, "Tiêu thụ (KWh)"] = (df.loc["Tổng cộng", "D"] - total_service - df_gme_frame_total)
+    df_tieu_thu_frame.loc[3, "Tiêu thụ (KWh)"] = (df.loc["Tổng cộng", "D"] - df_vna8_total - total_service)
 
     df_tieu_thu_frame.loc[0, "%"] = f"{round((df_vna8_total / df.loc['Tổng cộng', 'D']) * 100, 2)}%"
     df_tieu_thu_frame.loc[1, "%"] = f"{round((total_service / df.loc['Tổng cộng', 'D']) * 100, 2)}%"
