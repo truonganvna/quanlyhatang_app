@@ -14,16 +14,15 @@ def bao_cao_thang_electric(file_input):
         "Hệ số": [1, 1, 1, 1, 1, 1, ""],
         "Tổng KWh": [""]*7,
         "%": [""]*7,
-        "Thanh toán (KWh)": [""]*7
+        "Thanh toán(KWh)": [""]*7
     })
-    df_mb1_frame.loc[:5, "CSĐK"] = df_mb1["28/02"].values
-    df_mb1_frame.loc[:5, "CSCK"] = df_mb1["31/03"].values
+    df_mb1_frame.loc[:5, "CSĐK"] = df_mb1.iloc[:,2].values
+    df_mb1_frame.loc[:5, "CSCK"] = df_mb1.iloc[:,3].values
     df_mb1_frame.loc[:5, "Tổng KWh"] = [(df_mb1_frame.loc[i, "CSCK"] - df_mb1_frame.loc[i, "CSĐK"]) * df_mb1_frame.loc[i, "Hệ số"] for i in range(6)]
     df_mb1_frame.loc[3, "%"] = round(df_mb1_frame.loc[4, "Tổng KWh"]/(df_mb1_frame.loc[4, "Tổng KWh"] + df_mb1_frame.loc[5, "Tổng KWh"]), 2)
-    df_mb1_frame.loc[:4, "Thanh toán (KWh)"] = df_mb1_frame.loc[:5, "Tổng KWh"]
-    df_mb1_frame.loc[3, "Thanh toán (KWh)"] = df_mb1_frame.loc[3, "Tổng KWh"] * df_mb1_frame.loc[3, "%"]
-    df_mb1_frame.loc[6, "Thanh toán (KWh)"] = sum(df_mb1_frame.loc[:4, "Thanh toán (KWh)"])
-
+    df_mb1_frame.loc[:4, "Thanh toán(KWh)"] = df_mb1_frame.loc[:5, "Tổng KWh"]
+    df_mb1_frame.loc[3, "Thanh toán(KWh)"] = df_mb1_frame.loc[3, "Tổng KWh"] * df_mb1_frame.loc[3, "%"]
+    df_mb1_frame.loc[6, "Thanh toán(KWh)"] = sum(df_mb1_frame.loc[:4, "Thanh toán(KWh)"])
 
     df_mb2 = df.loc[["AS + ĐL T3+T2+T1 (MB)"]]
     df_mb2_frame = pd.DataFrame({
@@ -36,13 +35,12 @@ def bao_cao_thang_electric(file_input):
         "Hệ số": [1, ""],
         "Tổng KWh": [""]*2,
         "%": [""]*2,
-        "Thanh toán (KWh)": [""]*2
+        "Thanh toán(KWh)": [""]*2
     })
-    df_mb2_frame.loc[:0,'CSĐK'] = df_mb2['28/02'].values
-    df_mb2_frame.loc[:0,'CSCK'] = df_mb2['31/03'].values
+    df_mb2_frame.loc[:0,'CSĐK'] = df_mb2.iloc[:,2].values
+    df_mb2_frame.loc[:0,'CSCK'] = df_mb2.iloc[:,3].values
     df_mb2_frame.loc[:0,'Tổng KWh'] = (df_mb2_frame.loc[0,'CSCK'] - df_mb2_frame.loc[0,'CSĐK']) * df_mb2_frame.loc[0,'Hệ số']
-    df_mb2_frame.loc[:1,'Thanh toán (KWh)'] = df_mb2_frame.loc[0,'Tổng KWh']
-
+    df_mb2_frame.loc[:1,'Thanh toán(KWh)'] = df_mb2_frame.loc[0,'Tổng KWh']
 
     df_giovani1 = df.loc[["Outdoor 1-T1", "Outdoor 2-T1", "Indoor-GIOVANI", "Indoor- TTX"]]
     df_giovani1_frame = pd.DataFrame({
@@ -58,20 +56,19 @@ def bao_cao_thang_electric(file_input):
         "Hệ số": [1, 1, "", 1, 1, ""],
         "Tổng KWh": ["", "", "", "", "", ""],
         "%": ["", "", "", "", "", ""],
-        "Thanh toán (KWh)": ["", "", "", "", "", ""]
+        "Thanh toán(KWh)": ["", "", "", "", "", ""]
     })
-    df_giovani1_frame.loc[:1, "CSĐK"] = df_giovani1["28/02"].iloc[:2].values
-    df_giovani1_frame.loc[3:4, "CSĐK"] = df_giovani1["28/02"].iloc[2:4].values
+    df_giovani1_frame.loc[:1, "CSĐK"] = df_giovani1.iloc[:2,2].values
+    df_giovani1_frame.loc[3:4, "CSĐK"] = df_giovani1.iloc[2:4, 2].values
 
-    df_giovani1_frame.loc[:1, "CSCK"] = df_giovani1["31/03"].iloc[:2].values
-    df_giovani1_frame.loc[3:4, "CSCK"] = df_giovani1["31/03"].iloc[2:4].values
+    df_giovani1_frame.loc[:1, "CSCK"] = df_giovani1.iloc[:2,3].values
+    df_giovani1_frame.loc[3:4, "CSCK"] = df_giovani1.iloc[2:4, 3].values
     df_giovani1_frame.loc[:1, "Tổng KWh"] = (df_giovani1_frame.loc[:1, "CSCK"] - df_giovani1_frame.loc[:1, "CSĐK"]) * df_giovani1_frame.loc[:1, "Hệ số"]
     df_giovani1_frame.loc[3:4, "Tổng KWh"] = (df_giovani1_frame.loc[3:4, "CSCK"] - df_giovani1_frame.loc[3:4, "CSĐK"]) * df_giovani1_frame.loc[3:4, "Hệ số"]
     df_giovani1_frame.loc[2, "%"] = round(df_giovani1_frame.loc[3, "Tổng KWh"]/(df_giovani1_frame.loc[3, "Tổng KWh"] + df_giovani1_frame.loc[4, "Tổng KWh"]), 2)
-    df_giovani1_frame.loc[2, "Thanh toán (KWh)"] = round(sum(df_giovani1_frame.loc[:1, "Tổng KWh"]) * df_giovani1_frame.loc[2, "%"], 1)
-    df_giovani1_frame.loc[3, "Thanh toán (KWh)"] = df_giovani1_frame.loc[3, "Tổng KWh"]
-    df_giovani1_frame.loc[5, "Thanh toán (KWh)"] = pd.to_numeric(df_giovani1_frame.loc[:4, "Thanh toán (KWh)"], errors="coerce").sum()
-
+    df_giovani1_frame.loc[2, "Thanh toán(KWh)"] = round(sum(df_giovani1_frame.loc[:1, "Tổng KWh"]) * df_giovani1_frame.loc[2, "%"], 1)
+    df_giovani1_frame.loc[3, "Thanh toán(KWh)"] = df_giovani1_frame.loc[3, "Tổng KWh"]
+    df_giovani1_frame.loc[5, "Thanh toán(KWh)"] = pd.to_numeric(df_giovani1_frame.loc[:4, "Thanh toán(KWh)"], errors="coerce").sum()
 
     df_giovani2 = df.loc[["AS+ĐL - GIOVANI"]]
     df_giovani2_frame = pd.DataFrame({
@@ -84,13 +81,12 @@ def bao_cao_thang_electric(file_input):
         "Hệ số": [1, ""],
         "Tổng KWh": [""]*2,
         "%": [""]*2,
-        "Thanh toán (KWh)": [""]*2
+        "Thanh toán(KWh)": [""]*2
     })
-    df_giovani2_frame.loc[:0,'CSĐK'] = df_giovani2['28/02'].values
-    df_giovani2_frame.loc[:0,'CSCK'] = df_giovani2['31/03'].values
+    df_giovani2_frame.loc[:0,'CSĐK'] = df_giovani2.iloc[:1, 2].values
+    df_giovani2_frame.loc[:0,'CSCK'] = df_giovani2.iloc[:1, 3].values
     df_giovani2_frame.loc[:0,'Tổng KWh'] = (df_giovani2_frame.loc[0,'CSCK'] - df_giovani2_frame.loc[0,'CSĐK']) * df_giovani2_frame.loc[0,'Hệ số']
-    df_giovani2_frame.loc[:1,'Thanh toán (KWh)'] = df_giovani2_frame.loc[0,'Tổng KWh']
-
+    df_giovani2_frame.loc[:1,'Thanh toán(KWh)'] = df_giovani2_frame.loc[0,'Tổng KWh']
 
     df_gme = df.loc[["AS + ĐL T4 (GME)", "ĐH-Outdoor T4 (GME +TTX)", "ĐH-Indoor T4 (GME)", "ĐH-Indoor T4 (TTX)"]]
     df_gme_frame = pd.DataFrame({
@@ -109,18 +105,17 @@ def bao_cao_thang_electric(file_input):
         "Hệ số": [1, 1, 1, 1, ""],
         "Tổng KWh": [""] * 5,
         "%": [""] * 5,
-        "Thanh toán (KWh)": [""] * 5
+        "Thanh toán(KWh)": [""] * 5
     })
-    df_gme_frame.loc[:3, "CSĐK"] = df_gme["28/02"].values
-    df_gme_frame.loc[:3, "CSCK"] = df_gme["31/03"].values
+    df_gme_frame.loc[:3, "CSĐK"] = df_gme.iloc[:, 2].values
+    df_gme_frame.loc[:3, "CSCK"] = df_gme.iloc[:, 3].values
     df_gme_frame.loc[:3, 'Tổng KWh'] = (df_gme_frame.loc[:3, 'CSCK'] - df_gme_frame.loc[:3, 'CSĐK']) * df_gme_frame.loc[:3, 'Hệ số']
     df_gme_frame.loc[1, "%"] = round(df_gme_frame.loc[2, "Tổng KWh"]/(df_gme_frame.loc[2, "Tổng KWh"] + df_gme_frame.loc[3, "Tổng KWh"]), 2)
 
-    df_gme_frame.loc[0, "Thanh toán (KWh)"] = df_gme_frame.loc[0, "Tổng KWh"]
-    df_gme_frame.loc[1, "Thanh toán (KWh)"] = df_gme_frame.loc[1, "Tổng KWh"] * df_gme_frame.loc[1, "%"]
-    df_gme_frame.loc[2, "Thanh toán (KWh)"] = df_gme_frame.loc[2, "Tổng KWh"]
-
-    df_gme_frame.loc[4, "Thanh toán (KWh)"] = sum(df_gme_frame.loc[:2, "Thanh toán (KWh)"])
+    df_gme_frame.loc[0, "Thanh toán(KWh)"] = df_gme_frame.loc[0, "Tổng KWh"]
+    df_gme_frame.loc[1, "Thanh toán(KWh)"] = df_gme_frame.loc[1, "Tổng KWh"] * df_gme_frame.loc[1, "%"]
+    df_gme_frame.loc[2, "Thanh toán(KWh)"] = df_gme_frame.loc[2, "Tổng KWh"]
+    df_gme_frame.loc[4, "Thanh toán(KWh)"] = sum(df_gme_frame.loc[:2, "Thanh toán(KWh)"])
 
     df_baoviet = df.loc[["Bảo Việt T5"]]
     df_baoviet_frame = pd.DataFrame({
@@ -133,14 +128,14 @@ def bao_cao_thang_electric(file_input):
         "Hệ số": [1, ""],
         "Tổng KWh": ["", ""],
         "%": ["", ""],
-        "Thanh toán (KWh)": ["", ""]
+        "Thanh toán(KWh)": ["", ""]
     })
 
-    df_baoviet_frame.loc[:0, "CSĐK"] = df_baoviet["28/02"].values
-    df_baoviet_frame.loc[:0, "CSCK"] = df_baoviet["31/03"].values
+    df_baoviet_frame.loc[:0, "CSĐK"] = df_baoviet.iloc[:1, 2].values
+    df_baoviet_frame.loc[:0, "CSCK"] = df_baoviet.iloc[:1, 3].values
     df_baoviet_frame.loc[:0, "Tổng KWh"] = (df_baoviet_frame.loc[0, "CSCK"] - df_baoviet_frame.loc[0, "CSĐK"]) * df_baoviet_frame.loc[0, "Hệ số"]
-    df_baoviet_frame.loc[0, "Thanh toán (KWh)"] = df_baoviet_frame.loc[0, "Tổng KWh"]
-    df_baoviet_frame.loc[1, "Thanh toán (KWh)"] = sum(df_baoviet_frame.loc[:0, "Thanh toán (KWh)"])
+    df_baoviet_frame.loc[0, "Thanh toán(KWh)"] = df_baoviet_frame.loc[0, "Tổng KWh"]
+    df_baoviet_frame.loc[1, "Thanh toán(KWh)"] = sum(df_baoviet_frame.loc[:0, "Thanh toán(KWh)"])
 
     df_fbs = df.loc[["AS+ĐL FSB T12", "ĐH-Outdoor T12 (Mới)", "ĐH-Indoor FSB (Mới)"]]
     df_fsb_frame = pd.DataFrame({
@@ -153,14 +148,15 @@ def bao_cao_thang_electric(file_input):
         "Hệ số": [1, 1, 1, ""],
         "Tổng KWh": [""]*4,
         "%": ["", "", "", ""],
-        "Thanh toán (KWh)": [""]*4
+        "Thanh toán(KWh)": [""]*4
     })
-    df_fsb_frame.loc[:2, "CSĐK"] = df_fbs["28/02"].values
-    df_fsb_frame.loc[:2, "CSCK"] = df_fbs["31/03"].values
+    df_fsb_frame.loc[:2, "CSĐK"] = df_fbs.iloc[:, 2].values
+    df_fsb_frame.loc[:2, "CSCK"] = df_fbs.iloc[:, 3].values
     df_fsb_frame.loc[:2, "Tổng KWh"] = (df_fsb_frame.loc[:2, "CSCK"] - df_fsb_frame.loc[:2, "CSĐK"]) * df_fsb_frame.loc[:2, "Hệ số"]
-    df_fsb_frame.loc[:2, "Thanh toán (KWh)"] = df_fsb_frame.loc[:2, "Tổng KWh"]
-    df_fsb_frame.loc[3, "Thanh toán (KWh)"] = sum(df_fsb_frame.loc[:2, "Thanh toán (KWh)"])
+    df_fsb_frame.loc[:2, "Thanh toán(KWh)"] = df_fsb_frame.loc[:2, "Tổng KWh"]
+    df_fsb_frame.loc[3, "Thanh toán(KWh)"] = sum(df_fsb_frame.loc[:2, "Thanh toán(KWh)"])
 
+    df_fbs_old = df.loc[["ĐH-Outdoor T12 (Cũ)", "ĐH-Indoor T12 (FSB-Cũ)", "ĐH-Indoor T12 (TTX-Cũ)"]]
     df_fbs_old_frame = pd.DataFrame({
         "Stt": [1, 2, 3, ""],
         "Số công tơ": [14047859, 17736901, 14520204, "Tổng"],
@@ -171,23 +167,20 @@ def bao_cao_thang_electric(file_input):
         "Hệ số": [1, 1, 1, ""],
         "Tổng KWh": [""]*4,
         "%": [""]*4,
-        "Thanh toán (KWh)": [""]*4
+        "Thanh toán(KWh)": [""]*4
     })
 
-    df_fbs_old = df.loc[["ĐH-Outdoor T12 (Cũ)", "ĐH-Indoor T12 (FSB-Cũ)", "ĐH-Indoor T12 (TTX-Cũ)"]]
-    df_fbs_old_frame.loc[:2, "CSĐK"] = df_fbs_old["28/02"].values
-    df_fbs_old_frame.loc[:2, "CSCK"] = df_fbs_old["31/03"].values
+    df_fbs_old_frame.loc[:2, "CSĐK"] = df_fbs_old.iloc[:, 2].values
+    df_fbs_old_frame.loc[:2, "CSCK"] = df_fbs_old.iloc[:, 3].values
     df_fbs_old_frame.loc[:2, "Tổng KWh"] = (df_fbs_old_frame.loc[:2, "CSCK"] - df_fbs_old_frame.loc[:2, "CSĐK"]) * df_fbs_old_frame.loc[:2, "Hệ số"]
     df_fbs_old_frame.loc[1, "%"] = round(df_fbs_old_frame.loc[1, "Tổng KWh"]/(df_fbs_old_frame.loc[1, "Tổng KWh"] + df_fbs_old_frame.loc[2, "Tổng KWh"]), 2)
-    df_fbs_old_frame.loc[0, "Thanh toán (KWh)"] = round(df_fbs_old_frame.loc[0, "Tổng KWh"] * df_fbs_old_frame.loc[1, "%"], 1)
-    df_fbs_old_frame.loc[1, "Thanh toán (KWh)"] = round(df_fbs_old_frame.loc[1, "Tổng KWh"], 1)
-    df_fbs_old_frame.loc[3, "Thanh toán (KWh)"] = sum(df_fbs_old_frame.loc[:1, "Thanh toán (KWh)"])
+    df_fbs_old_frame.loc[0, "Thanh toán(KWh)"] = round(df_fbs_old_frame.loc[0, "Tổng KWh"] * df_fbs_old_frame.loc[1, "%"], 1)
+    df_fbs_old_frame.loc[1, "Thanh toán(KWh)"] = round(df_fbs_old_frame.loc[1, "Tổng KWh"], 1)
+    df_fbs_old_frame.loc[3, "Thanh toán(KWh)"] = sum(df_fbs_old_frame.loc[:1, "Thanh toán(KWh)"])
 
     # Bảng Trung tâm hợp tác Quốc tế Thông tấn phần văn phòng
     df_dv8_vp = df.loc[["AS+ĐL 8THĐ", "ĐH 8THĐ", "33LTT", "AS18THĐ", "ĐH18THĐ", "AS20THĐ", "ĐH20THĐ", "AS-T6-11THĐ", "ĐH-T6-11THĐ", "AS-P604-11THĐ", "ĐH-P604-11THĐ", "AS T5.11THĐ",
                         "ĐH T5.11THĐ", "ĐH-T7 P701-703-705", "AS-T7 P701-703-705", "ĐH-T7 P702-704-706", "AS-T7 P702-704-706", "ĐH-T7 P707", "AS-T7 P707", "ĐH-T7 P708", "AS-T7 P708"]]
-
-
     df_dv8_vp_frame = pd.DataFrame({
         "Stt": [1, "", "", "", 2, "2.1", "", "", "", "", "2.2", "", "", "", "", "", "", "2.3", "", "", "", "", "", "", "", "", 3, ""],
         "Số công tơ": ["", 14308090, 14308130, 372755, "CT mới", "", 15485, 15485, 15485, 15485, "", "", "", "", "", "", "", "", 30094, 37553, 30098, 30138, 13579, 52583, 13464, 277745, 99178786, "Tổng"],
@@ -206,30 +199,30 @@ def bao_cao_thang_electric(file_input):
     df_dv8_vp_frame.loc[4, "Hệ số"] = 200
     df_dv8_vp_frame.loc[26, "Hệ số"] = 20
 
-    df_dv8_vp_frame.loc[1:3, "CSĐK"] = df_dv8_vp.loc["AS+ĐL 8THĐ":"33LTT", "28/02"].values
-    df_dv8_vp_frame.loc[1:3, "CSCK"] = df_dv8_vp.loc["AS+ĐL 8THĐ":"33LTT", "31/03"].values
+    df_dv8_vp_frame.loc[1:3, "CSĐK"] = df_dv8_vp.iloc[0:3, 2].values
+    df_dv8_vp_frame.loc[1:3, "CSCK"] = df_dv8_vp.iloc[0:3, 3].values
     df_dv8_vp_frame.loc[1:3, "Hệ số"] = df_dv8_vp.loc["AS+ĐL 8THĐ":"33LTT", "Hệ số"].values
     df_dv8_vp_frame.loc[1:3, "Tổng KWh"] = (df_dv8_vp_frame.loc[1:3, "CSCK"] - df_dv8_vp_frame.loc[1:3, "CSĐK"]) * df_dv8_vp_frame.loc[1:3, "Hệ số"]
     df_dv8_vp_frame.loc[1, "Thanh toán (KWh)"] = df_dv8_vp_frame.loc[1:3, "Tổng KWh"].sum()
 
-    df_dv8_vp_frame.loc[4, "CSĐK"] = df.loc["TBA-11THĐ 630KVA-10/0.4KV", "28/02"]
-    df_dv8_vp_frame.loc[4, "CSCK"] = df.loc["TBA-11THĐ 630KVA-10/0.4KV", "31/03"]
+    df_dv8_vp_frame.loc[4, "CSĐK"] = df.iloc[34, 2]
+    df_dv8_vp_frame.loc[4, "CSCK"] = df.iloc[34,3]
     df_dv8_vp_frame.loc[4, "Tổng KWh"] = (df_dv8_vp_frame.loc[4, "CSCK"] - df_dv8_vp_frame.loc[4, "CSĐK"]) * df_dv8_vp_frame.loc[4, "Hệ số"]
 
-    df_dv8_vp_frame.loc[6:9, "CSĐK"] = df_dv8_vp.loc["AS18THĐ":"ĐH20THĐ", "28/02"].values
-    df_dv8_vp_frame.loc[6:9, "CSCK"] = df_dv8_vp.loc["AS18THĐ":"ĐH20THĐ", "31/03"].values
+    df_dv8_vp_frame.loc[6:9, "CSĐK"] = df_dv8_vp.iloc[3:7, 2].values
+    df_dv8_vp_frame.loc[6:9, "CSCK"] = df_dv8_vp.iloc[3:7, 3].values
     df_dv8_vp_frame.loc[6:9, "Hệ số"] = df_dv8_vp.loc["AS18THĐ":"ĐH20THĐ", "Hệ số"].values
     df_dv8_vp_frame.loc[6:9, "Tổng KWh"] = (df_dv8_vp_frame.loc[6:9, "CSCK"] - df_dv8_vp_frame.loc[6:9, "CSĐK"]) * df_dv8_vp_frame.loc[6:9, "Hệ số"]
     df_dv8_vp_frame.loc[6, "Thanh toán (KWh)"] = df_dv8_vp_frame.loc[6:9, "Tổng KWh"].sum()
 
-    df_dv8_vp_frame.loc[11:16, "CSĐK"] = df_dv8_vp.loc["AS-T6-11THĐ":"ĐH T5.11THĐ", "28/02"].values
-    df_dv8_vp_frame.loc[11:16, "CSCK"] = df_dv8_vp.loc["AS-T6-11THĐ":"ĐH T5.11THĐ", "31/03"].values
+    df_dv8_vp_frame.loc[11:16, "CSĐK"] = df_dv8_vp.iloc[7:13, 2].values
+    df_dv8_vp_frame.loc[11:16, "CSCK"] = df_dv8_vp.iloc[7:13, 3].values
     df_dv8_vp_frame.loc[11:16, "Hệ số"] = df_dv8_vp.loc["AS-T6-11THĐ":"ĐH T5.11THĐ", "Hệ số"].values
     df_dv8_vp_frame.loc[11:16, "Tổng KWh"] = (df_dv8_vp_frame.loc[11:16, "CSCK"] - df_dv8_vp_frame.loc[11:16, "CSĐK"]) * df_dv8_vp_frame.loc[11:16, "Hệ số"]
     df_dv8_vp_frame.loc[11, "Thanh toán (KWh)"] = df_dv8_vp_frame.loc[11:16, "Tổng KWh"].sum()
 
-    df_dv8_vp_frame.loc[18:25, "CSĐK"] = df_dv8_vp.loc["ĐH-T7 P701-703-705":"AS-T7 P708", "28/02"].values
-    df_dv8_vp_frame.loc[18:25, "CSCK"] = df_dv8_vp.loc["ĐH-T7 P701-703-705":"AS-T7 P708", "31/03"].values
+    df_dv8_vp_frame.loc[18:25, "CSĐK"] = df_dv8_vp.iloc[13:21, 2].values
+    df_dv8_vp_frame.loc[18:25, "CSCK"] = df_dv8_vp.iloc[13:21, 3].values
     df_dv8_vp_frame.loc[18:25, "Hệ số"] = df_dv8_vp.loc["ĐH-T7 P701-703-705":"AS-T7 P708", "Hệ số"].values
     df_dv8_vp_frame.loc[18:25, "Tổng KWh"] = (df_dv8_vp_frame.loc[18:25, "CSCK"] - df_dv8_vp_frame.loc[18:25, "CSĐK"]) * df_dv8_vp_frame.loc[18:25, "Hệ số"]
     df_dv8_vp_frame.loc[18, "Thanh toán (KWh)"] = df_dv8_vp_frame.loc[18:25, "Tổng KWh"].sum()
@@ -242,11 +235,8 @@ def bao_cao_thang_electric(file_input):
     df_dv8_vp_frame.loc[27, "Tổng KWh"] = df_dv8_vp_frame_total_KWh
     df_dv8_vp_frame.loc[27, "Thanh toán (KWh)"] = df_dv8_vp_frame_total_thanhtoan
 
-
     # Bảng Trung tâm hợp tác Quốc tế Thông tấn phần PG Bank
     df_dv8_pgb = df.loc[["ĐH  -T1 (11THĐ)", "AS - T1 (11THĐ)", "ĐH  -T2 (11THĐ)", "AS - T2 (11THĐ)"]]
-
-
     df_dv8_pgb_frame = pd.DataFrame({
         "Stt": [1, 2, 3, 4, ""],
         "Số công tơ": [12067352, 13012746, 13010295, 13010298, "Tổng"],
@@ -260,8 +250,8 @@ def bao_cao_thang_electric(file_input):
         "Thanh toán (KWh)": [""]*5,
     })
 
-    df_dv8_pgb_frame.loc[:3, "CSĐK"] = df_dv8_pgb.loc["ĐH  -T1 (11THĐ)":"AS - T2 (11THĐ)", "28/02"].values
-    df_dv8_pgb_frame.loc[:3, "CSCK"] = df_dv8_pgb.loc["ĐH  -T1 (11THĐ)":"AS - T2 (11THĐ)", "31/03"].values
+    df_dv8_pgb_frame.loc[:3, "CSĐK"] = df_dv8_pgb.iloc[:4, 2].values
+    df_dv8_pgb_frame.loc[:3, "CSCK"] = df_dv8_pgb.iloc[:4, 3].values
     df_dv8_pgb_frame.loc[:3, "Hệ số"] = df_dv8_pgb.loc["ĐH  -T1 (11THĐ)":"AS - T2 (11THĐ)", "Hệ số"].values
     df_dv8_pgb_frame.loc[:3, "Tổng KWh"] = (df_dv8_pgb_frame.loc[:3, "CSCK"] - df_dv8_pgb_frame.loc[:3, "CSĐK"]) * df_dv8_pgb_frame.loc[:3, "Hệ số"]
     df_dv8_pgb_frame.loc[:3, "Thanh toán (KWh)"] = df_dv8_pgb_frame.loc[:3, "Tổng KWh"]
@@ -270,7 +260,6 @@ def bao_cao_thang_electric(file_input):
     # Bảng Trung tâm hợp tác Quốc tế Thông tấn phần văn phòng
     df_vna8_vp = df.loc[["AS+ĐL 8THĐ", "ĐH 8THĐ", "33LTT", "AS18THĐ", "ĐH18THĐ", "AS20THĐ", "ĐH20THĐ", "AS-T6-11THĐ", "ĐH-T6-11THĐ", "AS-P604-11THĐ", "ĐH-P604-11THĐ", "AS T5.11THĐ",
                         "ĐH T5.11THĐ", "ĐH-T7 P701-703-705", "AS-T7 P701-703-705", "ĐH-T7 P702-704-706", "AS-T7 P702-704-706", "ĐH-T7 P707", "AS-T7 P707", "ĐH-T7 P708", "AS-T7 P708"]]
-
     df_vna8_vp_frame = pd.DataFrame({
         "Stt": [1, "", "", "", 2, "2.1", "", "", "", "", "2.2", "", "", "", "", "", "", "2.3", "", "", "", "", "", "", "", "", 3, ""],
         "Số công tơ": ["", 14308090, 14308130, 372755, "CT mới", "", 15485, 15485, 15485, 15485, "", "", "", "", "", "", "", "", 30094, 37553, 30098, 30138, 13579, 52583, 13464, 277745, 99178786, "Tổng"],
@@ -364,16 +353,15 @@ def bao_cao_thang_electric(file_input):
             "Tổng"
         ],
         "Tổng KWh": ["", "", "", "", ""],
-        "Thanh toán (KWh)": ["", "", "", "", ""],
+        "Thanh toán KWh": ["", "", "", "", ""],
         "Ghi chú": ["", "", "", "", ""]
     })
 
     df_vna8_frame.loc[:3, "Tổng KWh"] = vna_lst
     df_vna8_frame.loc[4, "Tổng KWh"] = sum(vna_lst)
-    df_vna8_frame.loc[:3, "Thanh toán (KWh)"] = [7590, 2412, 6411, 2352]
-    df_vna8_frame.loc[4, "Thanh toán (KWh)"] = sum(df_vna8_frame.loc[:3, "Thanh toán (KWh)"])
+    df_vna8_frame.loc[:3, "Thanh toán KWh"] = [7590, 2412, 6411, 2352]
+    df_vna8_frame.loc[4, "Thanh toán KWh"] = sum(df_vna8_frame.loc[:3, "Thanh toán KWh"])
     df_vna8_frame
-
 
     sheet_dv_dict = {
         "MB1": [df_mb1_frame],
@@ -409,3 +397,4 @@ def bao_cao_thang_electric(file_input):
     }
 
     return sheet_dv_dict, titles_dv_dict, sheet_vna8_dict, titles_vna8_dict
+
