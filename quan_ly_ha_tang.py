@@ -653,6 +653,18 @@ def quan_ly_ha_tang_electric(file_input):
 
 
 def export_excel_formatted_fixed(sheet_df_dict, titles_dict, output_path):
+    """
+    Export and format dataframes to Excel with proper styling
+
+    Parameters:
+    -----------
+    sheet_df_dict : dict
+        Dictionary with sheet names as keys and lists of dataframes as values
+    titles_dict : dict
+        Dictionary with sheet names as keys and lists of titles as values
+    output_path : str
+        Path to save the Excel file
+    """
     with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
         header_fill = PatternFill(start_color='B8CCE4', end_color='B8CCE4', fill_type='solid')
         title_fill = PatternFill(start_color='4472C4', end_color='4472C4', fill_type='solid')
@@ -740,6 +752,20 @@ def export_excel_formatted_fixed(sheet_df_dict, titles_dict, output_path):
                         cell.font = bold_font
                         cell.border = thin_border
 
+                # Tìm vị trí các cột đặc biệt
+                so_cong_to_col = None
+                phan_tram_col = None
+
+                # Duyệt qua các cột header để tìm cột "Số công tơ" và "%"
+                for col in range(1, max_col + 1):
+                    header_cell = sheet.cell(row=start_row + 1, column=col)
+                    header_text = str(header_cell.value).lower() if header_cell.value else ""
+
+                    if "số công tơ" in header_text or "so cong to" in header_text:
+                        so_cong_to_col = col
+                    elif "%" in header_text:
+                        phan_tram_col = col
+
                 # Tính toán phạm vi dòng dữ liệu
                 if is_multi_index_columns:
                     data_start_row = start_row + 1 + header_rows + 1  # +1 cho dòng trống
@@ -773,11 +799,20 @@ def export_excel_formatted_fixed(sheet_df_dict, titles_dict, output_path):
 
                         cell.border = thin_border
 
-                        # Format số
-                        idx_cols = dataframe.index.nlevels
-                        if col > idx_cols and isinstance(cell.value, (int, float)):
-                            cell.number_format = '#,##0'
-                            cell.alignment = right_alignment
+                        # Áp dụng định dạng đặc biệt cho các cột
+                        if isinstance(cell.value, (int, float)):
+                            # Định dạng cột "Số công tơ" - số nguyên không dấu phẩy
+                            if so_cong_to_col and col == so_cong_to_col:
+                                cell.number_format = '0'
+                                cell.alignment = center_alignment
+                            # Định dạng cột "%" - 2 chữ số sau dấu phẩy
+                            elif phan_tram_col and col == phan_tram_col:
+                                cell.number_format = '0.00'
+                                cell.alignment = right_alignment
+                            # Định dạng các cột số khác
+                            elif col > dataframe.index.nlevels:
+                                cell.number_format = '#,##0'
+                                cell.alignment = right_alignment
                         else:
                             cell.alignment = center_alignment
 
