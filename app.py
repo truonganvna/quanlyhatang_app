@@ -9,7 +9,7 @@ from bao_cao_thang import bao_cao_thang_electric
 from xuat_file_excel import export_excel_formatted_fixed
 
 # Set page config
-st.set_page_config(page_title="Báo cáo điện TTXVN", layout="wide")
+st.set_page_config(page_title="Báo cáo điện TTXVN")
 
 
 # Function to display dataframes and create visualizations
