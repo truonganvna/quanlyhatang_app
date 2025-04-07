@@ -1,7 +1,7 @@
 import pandas as pd
 
 def bao_cao_tuan_electric(file_input):
-    df = pd.read_excel(file_input, skiprows=2)
+    df = pd.read_excel(file_input, dtype={'Stt': str}, skiprows=2)
     df = df.set_index("Địa chỉ")
 
     # I. Phần dịch vụ

@@ -1,7 +1,7 @@
 import pandas as pd
 
 def bao_cao_thang_electric(file_input):
-    df = pd.read_excel(file_input, skiprows=2).set_index('Địa chỉ')
+    df = pd.read_excel(file_input, dtype={'Stt': str}, skiprows=2).set_index('Địa chỉ')
 
     df_mb1 = df.loc[["ĐH-Outdoor T3 (MB)", "ĐH-Outdoor T2 (MB)", "ĐH-Indoor T3+T2 (MB)", "ĐH-Outdoor T1 (MB+TTX)", "ĐH-Indoor T1 (MB)", "ĐH-Indoor T1 (TTX)"]]
     df_mb1_frame = pd.DataFrame({
