@@ -9,7 +9,7 @@ from bao_cao_thang import bao_cao_thang_electric
 from xuat_file_excel import export_excel_formatted_fixed
 
 # Set page config
-st.set_page_config(page_title="Ứng dụng báo cáo số điện phòng Quản lý Hạ tầng kỹ thuật")
+st.set_page_config(page_title="Quản Lý Hạ Tầng Kỹ Thuật")
 
 
 # Function to display dataframes and create visualizations
@@ -210,7 +210,7 @@ def display_dataframes(dfs, titles, is_monthly=False):
 
 
 # Tiêu đề chính
-st.title("Báo cáo điện TTXVN")
+st.title("Báo Cáo Tổng Hợp Số Điện TTXVN")
 
 # Main tabs - luôn hiển thị 2 tab chính
 tab1, tab2 = st.tabs(["Báo cáo tuần", "Báo cáo tháng"])
@@ -220,7 +220,7 @@ with tab1:
     st.header("Báo cáo tuần")
 
     # File uploader for weekly report
-    uploaded_file_weekly = st.file_uploader("Upload file Excel báo cáo điện", type=["xlsx", "xls"], key="weekly_report")
+    uploaded_file_weekly = st.file_uploader("Tải lên file Excel dữ liệu tuần", type=["xlsx", "xls"], key="weekly_report")
 
     if uploaded_file_weekly is not None:
         try:
@@ -266,7 +266,7 @@ with tab2:
     st.header("Báo cáo tháng")
 
     # File uploader for monthly report
-    uploaded_file_monthly = st.file_uploader("Upload file Excel báo cáo điện", type=["xlsx", "xls"],
+    uploaded_file_monthly = st.file_uploader("Tải lên file Excel dữ liệu tháng", type=["xlsx", "xls"],
                                              key="monthly_report")
 
     if uploaded_file_monthly is not None:
