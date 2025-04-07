@@ -9,7 +9,7 @@ from bao_cao_thang import bao_cao_thang_electric
 from xuat_file_excel import export_excel_formatted_fixed
 
 # Set page config
-st.set_page_config(page_title="Báo cáo điện TTXVN")
+st.set_page_config(page_title="Ứng dụng báo cáo số điện phòng Quản lý Hạ tầng kỹ thuật")
 
 
 # Function to display dataframes and create visualizations
