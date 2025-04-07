@@ -353,14 +353,14 @@ def bao_cao_thang_electric(file_input):
             "Tổng"
         ],
         "Tổng KWh": ["", "", "", "", ""],
-        "Thanh toán KWh": ["", "", "", "", ""],
+        "Thanh toán (KWh)": ["", "", "", "", ""],
         "Ghi chú": ["", "", "", "", ""]
     })
 
     df_vna8_frame.loc[:3, "Tổng KWh"] = vna_lst
     df_vna8_frame.loc[4, "Tổng KWh"] = sum(vna_lst)
-    df_vna8_frame.loc[:3, "Thanh toán KWh"] = [7590, 2412, 6411, 2352]
-    df_vna8_frame.loc[4, "Thanh toán KWh"] = sum(df_vna8_frame.loc[:3, "Thanh toán KWh"])
+    df_vna8_frame.loc[:3, "Thanh toán (KWh)"] = [7590, 2412, 6411, 2352]
+    df_vna8_frame.loc[4, "Thanh toán (KWh)"] = sum(df_vna8_frame.loc[:3, "Thanh toán (KWh)"])
     df_vna8_frame
 
     sheet_dv_dict = {
