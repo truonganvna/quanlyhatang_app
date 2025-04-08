@@ -7,7 +7,7 @@ def bao_cao_thang_electric(file_input):
     df_mb1_frame = pd.DataFrame({
         "Stt": [1, 2, 3, 4, 5, 6, ""],
         "Số công tơ": [12068239, 12063634, 12063346, 12068229, 13011012, 13011297, "Tổng"],
-        "Loại c tơ": ["3 pha", "3 pha", "3 pha", "3 pha", "1 pha", "1 pha", ""],
+        "Loại công tơ": ["3 pha", "3 pha", "3 pha", "3 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": ["ĐH tầng 3 (Outdoor)", "ĐH tầng 2 (Outdoor)", "ĐH tầng 3+2(Indoor)", "ĐH tầng 1 (Outdoor)", "ĐH tầng1 (Indoor)-MB", "ĐH tầng 1 (Indoor)-TTX", ""],
         "CSCK": [""]*7,
         "CSĐK": [""]*7,
@@ -28,7 +28,7 @@ def bao_cao_thang_electric(file_input):
     df_mb2_frame = pd.DataFrame({
         "Stt": [1, ""],
         "Số công tơ": [403189, "Tổng"],
-        "Loại c tơ": ["3 pha", ""],
+        "Loại công tơ": ["3 pha", ""],
         "Địa chỉ": ["AS + ĐL tầng 1,2,3", ""],
         "CSCK": [""]*2,
         "CSĐK": [""]*2,
@@ -46,7 +46,7 @@ def bao_cao_thang_electric(file_input):
     df_giovani1_frame = pd.DataFrame({
         "Stt": [1, 2, "", 3, 4, ""],
         "Số công tơ": [14038150, 14038145, "", 15009568, 15012663, "Tổng"],
-        "Loại c tơ": ["3 pha", "3 pha", "", "1 pha", "1 pha", ""],
+        "Loại công tơ": ["3 pha", "3 pha", "", "1 pha", "1 pha", ""],
         "Địa chỉ": [
             "ĐH-Outdoor M1", "ĐH-Outdoor M2", "",
             "ĐH-Indoor N1 (GVN)", "ĐH-Indoor N2 (TTX)", ""
@@ -74,7 +74,7 @@ def bao_cao_thang_electric(file_input):
     df_giovani2_frame = pd.DataFrame({
         "Stt": [1, ""],
         "Số công tơ": [10511904, "Tổng"],
-        "Loại c tơ": ["3 pha", ""],
+        "Loại công tơ": ["3 pha", ""],
         "Địa chỉ": ["AS + ĐL DVT1", ""],
         "CSCK": [""]*2,
         "CSĐK": [""]*2,
@@ -92,7 +92,7 @@ def bao_cao_thang_electric(file_input):
     df_gme_frame = pd.DataFrame({
         "Stt": [4, 1, 3, 2, ""],
         "Số công tơ": [16698180, 16705013, 16702810, 16702656, "Tổng"],
-        "Loại c tơ": ["1 pha", "3 pha", "1 pha", "1 pha", ""],
+        "Loại công tơ": ["1 pha", "3 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": [
             "AS + ĐL T4 (GME)",
             "ĐH-Outdoor T4",
@@ -121,7 +121,7 @@ def bao_cao_thang_electric(file_input):
     df_baoviet_frame = pd.DataFrame({
         "Stt": [1, ""],
         "Số công tơ": [12068236, "Tổng"],
-        "Loại c tơ": ["3 pha", ""],
+        "Loại công tơ": ["3 pha", ""],
         "Địa chỉ": ["ĐH-Outdoor T5", ""],
         "CSCK": ["", ""],
         "CSĐK": ["", ""],
@@ -160,7 +160,7 @@ def bao_cao_thang_electric(file_input):
     df_fbs_old_frame = pd.DataFrame({
         "Stt": [1, 2, 3, ""],
         "Số công tơ": [14047859, 17736901, 14520204, "Tổng"],
-        "Loại c tơ": ["3 pha", "1 pha", "1 pha", ""],
+        "Loại công tơ": ["3 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": ["ĐH-Outdoor T12 (Cũ)", "ĐH-Outdoor T12 (Cũ)", "ĐH-Outdoor T12 (Cũ)", ""],
         "CSCK": [""]*4,
         "CSĐK": [""]*4,

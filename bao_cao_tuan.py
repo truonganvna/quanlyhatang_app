@@ -332,7 +332,6 @@ def bao_cao_tuan_electric(file_input):
 
     # Bảng cafe báo chí tầng 9
     df_cafe_t9 = df.loc[["T9-OC&AS Dịch vụ", "T9-OC khu bếp", "T9-O1 (27)", "T9-O2 (28)", "T9-DH Dịch vụ"]]
-    df_cafe_t9
     df_cafe_t9_frame = pd.DataFrame({
         "Stt": [1, 2, 3, 4, 5, "Tổng"],
         "Số công tơ": [16719505, 16719580, 16737351, 16737350, 15016996, ""],
