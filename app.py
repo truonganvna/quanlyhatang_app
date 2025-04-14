@@ -42,8 +42,12 @@ def display_dataframes(dfs, titles, is_monthly=False):
                             valid_data,
                             y='Sản lượng tuần mới (kWh)',
                             x='Địa chỉ',
-                            title='Sản lượng tiêu thụ điện theo địa điểm'
+                            title='Sản lượng tiêu thụ điện theo địa điểm',
+                            color='Địa chỉ',
+                            color_discrete_sequence=px.colors.qualitative.Set1,
+                            text='Sản lượng tuần mới (kWh)'
                         )
+                        summary_fig.update_traces(texttemplate='%{text:.1f}', textposition='outside')
                         chart_key = f"summary_{df_uuid}_{chart_counter}"
                         chart_counter += 1
                         st.plotly_chart(summary_fig, use_container_width=True, key=chart_key)
@@ -55,7 +59,8 @@ def display_dataframes(dfs, titles, is_monthly=False):
                         valid_data,
                         values='Tiêu thụ (KWh)',
                         names='Địa điểm',
-                        title='Tỷ lệ tiêu thụ điện'
+                        title='Tỷ lệ tiêu thụ điện',
+                        color_discrete_sequence=px.colors.qualitative.Set1
                     )
                     chart_key = f"consumption_{df_uuid}_{chart_counter}"
                     chart_counter += 1
@@ -86,13 +91,17 @@ def display_dataframes(dfs, titles, is_monthly=False):
                         filtered_df = filtered_df.dropna(subset=['Thanh toán (KWh)'])
 
                         if not filtered_df.empty:
+                            # Sắp xếp dữ liệu để đảm bảo thứ tự nhất quán
+                            filtered_df = filtered_df.sort_values('Địa chỉ')
+
                             # Biểu đồ cột
                             bar_fig = px.bar(
                                 filtered_df,
                                 y='Thanh toán (KWh)',
                                 x='Địa chỉ',
                                 title='Sản lượng thanh toán theo địa điểm',
-                                color='Địa chỉ' if is_monthly else None,
+                                color='Địa chỉ',
+                                color_discrete_sequence=px.colors.qualitative.Set1,
                                 text='Thanh toán (KWh)'
                             )
                             bar_fig.update_traces(texttemplate='%{text:.1f}', textposition='outside')
@@ -108,6 +117,7 @@ def display_dataframes(dfs, titles, is_monthly=False):
                                     values='Thanh toán (KWh)',
                                     names='Địa chỉ',
                                     title='Tỷ lệ tiêu thụ điện theo địa điểm',
+                                    color_discrete_sequence=px.colors.qualitative.Set1,
                                     hole=0.4
                                 )
                                 pie_fig.update_traces(textinfo='percent+label')
@@ -144,6 +154,7 @@ def display_dataframes(dfs, titles, is_monthly=False):
                                 x='Tên công tơ',
                                 y='Tiêu thụ (KWh)',
                                 color='Thời gian',
+                                color_discrete_sequence=px.colors.qualitative.Set1,
                                 barmode='group',
                                 title='Tiêu thụ trung bình theo tuần'
                             )
@@ -168,9 +179,7 @@ def display_dataframes(dfs, titles, is_monthly=False):
                                     x_col = potential_col
                                     break
 
-                            # Nếu không có các cột mặc định, dùng cột STT
-                            if x_col is None and 'STT' in df.columns:
-                                x_col = 'STT'
+                            # Không sử dụng STT làm trục x cho biểu đồ
 
                             if x_col:
                                 # Lấy cột số đầu tiên để làm trục y
@@ -187,12 +196,17 @@ def display_dataframes(dfs, titles, is_monthly=False):
                                     ]
 
                                 if len(valid_data) > 1:
+                                    # Sắp xếp dữ liệu
+                                    if x_col in valid_data.columns:
+                                        valid_data = valid_data.sort_values(x_col)
+
                                     gen_fig = px.bar(
                                         valid_data,
                                         x=x_col,
                                         y=y_col,
                                         title=f'{y_col} theo {x_col}',
-                                        color=x_col if is_monthly else None,
+                                        color=x_col,
+                                        color_discrete_sequence=px.colors.qualitative.Set1,
                                         text=y_col
                                     )
                                     gen_fig.update_traces(texttemplate='%{text:.1f}', textposition='outside')
@@ -220,7 +234,8 @@ with tab1:
     st.header("Báo cáo tuần")
 
     # File uploader for weekly report
-    uploaded_file_weekly = st.file_uploader("Tải lên file Excel dữ liệu tuần", type=["xlsx", "xls"], key="weekly_report")
+    uploaded_file_weekly = st.file_uploader("Tải lên file Excel dữ liệu tuần", type=["xlsx", "xls"],
+                                            key="weekly_report")
 
     if uploaded_file_weekly is not None:
         try:
