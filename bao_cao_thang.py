@@ -1,11 +1,11 @@
 import pandas as pd
 
 def bao_cao_thang_electric(file_input):
-    df = pd.read_excel(file_input, dtype={'Stt': str}, skiprows=2).set_index('Địa chỉ')
+    df = pd.read_excel(file_input, dtype={'STT': str}, skiprows=2).set_index('Địa chỉ')
 
     df_mb1 = df.loc[["ĐH-Outdoor T3 (MB)", "ĐH-Outdoor T2 (MB)", "ĐH-Indoor T3+T2 (MB)", "ĐH-Outdoor T1 (MB+TTX)", "ĐH-Indoor T1 (MB)", "ĐH-Indoor T1 (TTX)"]]
     df_mb1_frame = pd.DataFrame({
-        "Stt": [1, 2, 3, 4, 5, 6, ""],
+        "STT": [1, 2, 3, 4, 5, 6, ""],
         "Số công tơ": [12068239, 12063634, 12063346, 12068229, 13011012, 13011297, "Tổng"],
         "Loại công tơ": ["3 pha", "3 pha", "3 pha", "3 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": ["ĐH tầng 3 (Outdoor)", "ĐH tầng 2 (Outdoor)", "ĐH tầng 3+2(Indoor)", "ĐH tầng 1 (Outdoor)", "ĐH tầng1 (Indoor)-MB", "ĐH tầng 1 (Indoor)-TTX", ""],
@@ -26,7 +26,7 @@ def bao_cao_thang_electric(file_input):
 
     df_mb2 = df.loc[["AS + ĐL T3+T2+T1 (MB)"]]
     df_mb2_frame = pd.DataFrame({
-        "Stt": [1, ""],
+        "STT": [1, ""],
         "Số công tơ": [403189, "Tổng"],
         "Loại công tơ": ["3 pha", ""],
         "Địa chỉ": ["AS + ĐL tầng 1,2,3", ""],
@@ -44,7 +44,7 @@ def bao_cao_thang_electric(file_input):
 
     df_giovani1 = df.loc[["Outdoor 1-T1", "Outdoor 2-T1", "Indoor-GIOVANI", "Indoor- TTX"]]
     df_giovani1_frame = pd.DataFrame({
-        "Stt": [1, 2, "", 3, 4, ""],
+        "STT": [1, 2, "", 3, 4, ""],
         "Số công tơ": [14038150, 14038145, "", 15009568, 15012663, "Tổng"],
         "Loại công tơ": ["3 pha", "3 pha", "", "1 pha", "1 pha", ""],
         "Địa chỉ": [
@@ -72,7 +72,7 @@ def bao_cao_thang_electric(file_input):
 
     df_giovani2 = df.loc[["AS+ĐL - GIOVANI"]]
     df_giovani2_frame = pd.DataFrame({
-        "Stt": [1, ""],
+        "STT": [1, ""],
         "Số công tơ": [10511904, "Tổng"],
         "Loại công tơ": ["3 pha", ""],
         "Địa chỉ": ["AS + ĐL DVT1", ""],
@@ -90,7 +90,7 @@ def bao_cao_thang_electric(file_input):
 
     df_gme = df.loc[["AS + ĐL T4 (GME)", "ĐH-Outdoor T4 (GME +TTX)", "ĐH-Indoor T4 (GME)", "ĐH-Indoor T4 (TTX)"]]
     df_gme_frame = pd.DataFrame({
-        "Stt": [4, 1, 3, 2, ""],
+        "STT": [4, 1, 3, 2, ""],
         "Số công tơ": [16698180, 16705013, 16702810, 16702656, "Tổng"],
         "Loại công tơ": ["1 pha", "3 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": [
@@ -119,7 +119,7 @@ def bao_cao_thang_electric(file_input):
 
     df_baoviet = df.loc[["Bảo Việt T5"]]
     df_baoviet_frame = pd.DataFrame({
-        "Stt": [1, ""],
+        "STT": [1, ""],
         "Số công tơ": [12068236, "Tổng"],
         "Loại công tơ": ["3 pha", ""],
         "Địa chỉ": ["ĐH-Outdoor T5", ""],
@@ -139,7 +139,7 @@ def bao_cao_thang_electric(file_input):
 
     df_fbs = df.loc[["AS+ĐL FSB T12", "ĐH-Outdoor T12 (Mới)", "ĐH-Indoor FSB (Mới)"]]
     df_fsb_frame = pd.DataFrame({
-        "Stt": [1, 2, 3, ""],
+        "STT": [1, 2, 3, ""],
         "Số công tơ": [12068236, 16719586, "09048549", "Tổng"],
         "Loại công tơ": ["3 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": ["AS+ĐL FSB T12", "ĐH-Outdoor T12 (Mới)", "ĐH-Indoor FSB (Mới)", ""],
@@ -158,7 +158,7 @@ def bao_cao_thang_electric(file_input):
 
     df_fbs_old = df.loc[["ĐH-Outdoor T12 (Cũ)", "ĐH-Indoor T12 (FSB-Cũ)", "ĐH-Indoor T12 (TTX-Cũ)"]]
     df_fbs_old_frame = pd.DataFrame({
-        "Stt": [1, 2, 3, ""],
+        "STT": [1, 2, 3, ""],
         "Số công tơ": [14047859, 17736901, 14520204, "Tổng"],
         "Loại công tơ": ["3 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": ["ĐH-Outdoor T12 (Cũ)", "ĐH-Outdoor T12 (Cũ)", "ĐH-Outdoor T12 (Cũ)", ""],
@@ -182,7 +182,7 @@ def bao_cao_thang_electric(file_input):
     df_dv8_vp = df.loc[["AS+ĐL 8THĐ", "ĐH 8THĐ", "33LTT", "AS18THĐ", "ĐH18THĐ", "AS20THĐ", "ĐH20THĐ", "AS-T6-11THĐ", "ĐH-T6-11THĐ", "AS-P604-11THĐ", "ĐH-P604-11THĐ", "AS T5.11THĐ",
                         "ĐH T5.11THĐ", "ĐH-T7 P701-703-705", "AS-T7 P701-703-705", "ĐH-T7 P702-704-706", "AS-T7 P702-704-706", "ĐH-T7 P707", "AS-T7 P707", "ĐH-T7 P708", "AS-T7 P708"]]
     df_dv8_vp_frame = pd.DataFrame({
-        "Stt": [1, "", "", "", 2, "2.1", "", "", "", "", "2.2", "", "", "", "", "", "", "2.3", "", "", "", "", "", "", "", "", 3, ""],
+        "STT": [1, "", "", "", 2, "2.1", "", "", "", "", "2.2", "", "", "", "", "", "", "2.3", "", "", "", "", "", "", "", "", 3, ""],
         "Số công tơ": ["", 14308090, 14308130, 372755, "CT mới", "", 15485, 15485, 15485, 15485, "", "", "", "", "", "", "", "", 30094, 37553, 30098, 30138, 13579, 52583, 13464, 277745, 99178786, "Tổng"],
         "Loại công tơ": ["", "3 pha", "3 pha", "3 pha", "3 pha", "", "3 pha", "3 pha", "3 pha", "3 pha", "", "3 pha", "3 pha", "1 pha", "1 pha", "3 pha", "3 pha", "", "3 pha", "3 pha", "3 pha", "3 pha", "1 pha", "1 pha", "1 pha", "1 pha", "3 pha", ""],
         "Địa chỉ": ["Khu vực số 8THĐ", "AS 8THĐ (từ 5LTK)", "ĐH 8THĐ (từ 5LTK)", "Số 33LTT (từ 8THĐ)", "BA - 630KVA", "18-20 THĐ", "AS18. THĐ", "ĐH18. THĐ", "AS20. THĐ", "ĐH20. THĐ",
@@ -238,7 +238,7 @@ def bao_cao_thang_electric(file_input):
     # Bảng Trung tâm hợp tác Quốc tế Thông tấn phần PG Bank
     df_dv8_pgb = df.loc[["ĐH  -T1 (11THĐ)", "AS - T1 (11THĐ)", "ĐH  -T2 (11THĐ)", "AS - T2 (11THĐ)"]]
     df_dv8_pgb_frame = pd.DataFrame({
-        "Stt": [1, 2, 3, 4, ""],
+        "STT": [1, 2, 3, 4, ""],
         "Số công tơ": [12067352, 13012746, 13010295, 13010298, "Tổng"],
         "Loại công tơ": ["1 pha", "1 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": ["ĐH -T1 (11THĐ)", "AS - T1 (11THĐ)", "ĐH -T2 (11THĐ)", "AS - T2 (11THĐ)", ""],
@@ -261,7 +261,7 @@ def bao_cao_thang_electric(file_input):
     df_vna8_vp = df.loc[["AS+ĐL 8THĐ", "ĐH 8THĐ", "33LTT", "AS18THĐ", "ĐH18THĐ", "AS20THĐ", "ĐH20THĐ", "AS-T6-11THĐ", "ĐH-T6-11THĐ", "AS-P604-11THĐ", "ĐH-P604-11THĐ", "AS T5.11THĐ",
                         "ĐH T5.11THĐ", "ĐH-T7 P701-703-705", "AS-T7 P701-703-705", "ĐH-T7 P702-704-706", "AS-T7 P702-704-706", "ĐH-T7 P707", "AS-T7 P707", "ĐH-T7 P708", "AS-T7 P708"]]
     df_vna8_vp_frame = pd.DataFrame({
-        "Stt": [1, "", "", "", 2, "2.1", "", "", "", "", "2.2", "", "", "", "", "", "", "2.3", "", "", "", "", "", "", "", "", 3, ""],
+        "STT": [1, "", "", "", 2, "2.1", "", "", "", "", "2.2", "", "", "", "", "", "", "2.3", "", "", "", "", "", "", "", "", 3, ""],
         "Số công tơ": ["", 14308090, 14308130, 372755, "CT mới", "", 15485, 15485, 15485, 15485, "", "", "", "", "", "", "", "", 30094, 37553, 30098, 30138, 13579, 52583, 13464, 277745, 99178786, "Tổng"],
         "Loại công tơ": ["", "3 pha", "3 pha", "3 pha", "3 pha", "", "3 pha", "3 pha", "3 pha", "3 pha", "", "3 pha", "3 pha", "1 pha", "1 pha", "3 pha", "3 pha", "", "3 pha", "3 pha", "3 pha", "3 pha", "1 pha", "1 pha", "1 pha", "1 pha", "3 pha", ""],
         "Địa chỉ": ["Khu vực số 8THĐ", "AS 8THĐ (từ 5LTK)", "ĐH 8THĐ (từ 5LTK)", "Số 33LTT (từ 8THĐ)", "BA - 630KVA", "18-20 THĐ", "AS18. THĐ", "ĐH18. THĐ", "AS20. THĐ", "ĐH20. THĐ",
@@ -317,7 +317,7 @@ def bao_cao_thang_electric(file_input):
     # Bảng Trung tâm hợp tác Quốc tế Thông tấn phần PG Bank
     df_vna8_pgb = df.loc[["ĐH  -T1 (11THĐ)", "AS - T1 (11THĐ)", "ĐH  -T2 (11THĐ)", "AS - T2 (11THĐ)"]]
     df_vna8_pgb_frame = pd.DataFrame({
-        "Stt": [1, 2, 3, 4, ""],
+        "STT": [1, 2, 3, 4, ""],
         "Số công tơ": [12067352, 13012746, 13010295, 13010298, "Tổng"],
         "Loại công tơ": ["1 pha", "1 pha", "1 pha", "1 pha", ""],
         "Địa chỉ": ["ĐH -T1 (11THĐ)", "AS - T1 (11THĐ)", "ĐH -T2 (11THĐ)", "AS - T2 (11THĐ)", ""],
@@ -344,7 +344,7 @@ def bao_cao_thang_electric(file_input):
     vna_lst = [vna8_8tdh, vna8_18_20thd, vn8_t6_t7_11thd, vna8_pgb]
 
     df_vna8_frame = pd.DataFrame({
-        "Stt": [1, 2, 3, 4, ""],  # Dòng "Tổng" không có số thứ tự
+        "STT": [1, 2, 3, 4, ""],  # Dòng "Tổng" không có số thứ tự
         "Địa chỉ": [
             "Khu vực số 8 THĐ",
             "Khu vực số 18-20 THĐ",

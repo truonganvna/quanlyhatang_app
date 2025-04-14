@@ -36,7 +36,7 @@ def display_dataframes(dfs, titles, is_monthly=False):
                 if 'Sản lượng tuần mới (kWh)' in df.columns:
                     # For summary sheet
                     valid_data = df[~df['Sản lượng tuần mới (kWh)'].isna()].copy()
-                    valid_data = valid_data[valid_data['Stt'] < 21]  # Loại bỏ hàng Tổng
+                    valid_data = valid_data[valid_data['STT'] < 21]  # Loại bỏ hàng Tổng
                     if not valid_data.empty:
                         summary_fig = px.bar(
                             valid_data,
@@ -50,7 +50,7 @@ def display_dataframes(dfs, titles, is_monthly=False):
 
                 elif 'Tiêu thụ (KWh)' in df.columns:
                     # For consumption sheet
-                    valid_data = df[df['Stt'] < 4].copy()  # Loại bỏ hàng tổng
+                    valid_data = df[df['STT'] < 4].copy()  # Loại bỏ hàng tổng
                     consumption_fig = px.pie(
                         valid_data,
                         values='Tiêu thụ (KWh)',
@@ -68,15 +68,15 @@ def display_dataframes(dfs, titles, is_monthly=False):
                         filtered_df = df.copy()
 
                         # Loại bỏ hàng tổng
-                        if 'Stt' in filtered_df.columns:
-                            filtered_df['Stt'] = filtered_df['Stt'].astype(str)
+                        if 'STT' in filtered_df.columns:
+                            filtered_df['STT'] = filtered_df['STT'].astype(str)
                             filtered_df = filtered_df[
-                                ~filtered_df['Stt'].str.contains('Tổng|tổng|^$', case=False, na=False, regex=True)
+                                ~filtered_df['STT'].str.contains('Tổng|tổng|^$', case=False, na=False, regex=True)
                             ]
                             # Thêm lọc cho các giá trị số
                             try:
-                                filtered_df['Stt'] = pd.to_numeric(filtered_df['Stt'], errors='coerce')
-                                filtered_df = filtered_df.dropna(subset=['Stt'])
+                                filtered_df['STT'] = pd.to_numeric(filtered_df['STT'], errors='coerce')
+                                filtered_df = filtered_df.dropna(subset=['STT'])
                             except:
                                 pass
 
@@ -168,9 +168,9 @@ def display_dataframes(dfs, titles, is_monthly=False):
                                     x_col = potential_col
                                     break
 
-                            # Nếu không có các cột mặc định, dùng cột Stt
-                            if x_col is None and 'Stt' in df.columns:
-                                x_col = 'Stt'
+                            # Nếu không có các cột mặc định, dùng cột STT
+                            if x_col is None and 'STT' in df.columns:
+                                x_col = 'STT'
 
                             if x_col:
                                 # Lấy cột số đầu tiên để làm trục y
@@ -180,9 +180,9 @@ def display_dataframes(dfs, titles, is_monthly=False):
                                 valid_data = df[~df[y_col].isna()].copy()
 
                                 # Loại bỏ hàng tổng nếu có
-                                if 'Stt' in valid_data.columns:
+                                if 'STT' in valid_data.columns:
                                     valid_data = valid_data[
-                                        ~valid_data['Stt'].astype(str).str.contains('Tổng|tổng|^$', case=False,
+                                        ~valid_data['STT'].astype(str).str.contains('Tổng|tổng|^$', case=False,
                                                                                     na=False, regex=True)
                                     ]
 
