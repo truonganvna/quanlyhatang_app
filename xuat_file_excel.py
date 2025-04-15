@@ -38,7 +38,6 @@ def export_excel_formatted_fixed(sheet_df_dict, titles_dict, output_path):
             top=Side(style='thin'),
             bottom=Side(style='thin')
         )
-
         thick_border = Border(
             left=Side(style='medium'),
             right=Side(style='medium'),

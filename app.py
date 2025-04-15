@@ -12,6 +12,45 @@ from xuat_file_excel import export_excel_formatted_fixed
 st.set_page_config(page_title="Quản Lý Hạ Tầng Kỹ Thuật")
 
 
+# Function to create consistent charts with a shared color map and consistent annotations
+def create_consistent_charts(df, category_col, value_col, title_prefix):
+    # Sort data and establish a consistent category order
+    df = df.sort_values(by=[category_col])
+    category_order = df[category_col].unique().tolist()
+
+    # Create a consistent color map
+    colors = px.colors.qualitative.Set1
+    category_color_map = {cat: colors[i % len(colors)] for i, cat in enumerate(category_order)}
+    discrete_color_map = {cat: category_color_map[cat] for cat in df[category_col].unique()}
+
+    # Create bar chart
+    bar_fig = px.bar(
+        df,
+        y=value_col,
+        x=category_col,
+        title=f'{title_prefix} theo {category_col}',
+        color=category_col,
+        color_discrete_map=discrete_color_map,
+        text=value_col,
+        category_orders={category_col: category_order}
+    )
+    bar_fig.update_traces(texttemplate='%{text:.1f}', textposition='outside')
+
+    # Create pie chart
+    pie_fig = px.pie(
+        df,
+        values=value_col,
+        names=category_col,
+        title=f'Tỷ lệ {title_prefix} theo {category_col}',
+        color=category_col,
+        color_discrete_map=discrete_color_map,
+        hole=0.4
+    )
+    pie_fig.update_traces(textinfo='percent+label')
+
+    return bar_fig, pie_fig
+
+
 # Function to display dataframes and create visualizations
 def display_dataframes(dfs, titles, is_monthly=False):
     for i, df in enumerate(dfs):
@@ -91,20 +130,13 @@ def display_dataframes(dfs, titles, is_monthly=False):
                         filtered_df = filtered_df.dropna(subset=['Thanh toán (KWh)'])
 
                         if not filtered_df.empty:
-                            # Sắp xếp dữ liệu để đảm bảo thứ tự nhất quán
-                            filtered_df = filtered_df.sort_values('Địa chỉ')
-
-                            # Biểu đồ cột
-                            bar_fig = px.bar(
+                            # Sử dụng hàm create_consistent_charts để tạo biểu đồ đồng nhất
+                            bar_fig, pie_fig = create_consistent_charts(
                                 filtered_df,
-                                y='Thanh toán (KWh)',
-                                x='Địa chỉ',
-                                title='Sản lượng thanh toán theo địa điểm',
-                                color='Địa chỉ',
-                                color_discrete_sequence=px.colors.qualitative.Set1,
-                                text='Thanh toán (KWh)'
+                                'Địa chỉ',
+                                'Thanh toán (KWh)',
+                                'Sản lượng thanh toán'
                             )
-                            bar_fig.update_traces(texttemplate='%{text:.1f}', textposition='outside')
 
                             bar_key = f"bar_{df_uuid}_{chart_counter}"
                             chart_counter += 1
@@ -112,16 +144,6 @@ def display_dataframes(dfs, titles, is_monthly=False):
 
                             # Thêm biểu đồ tròn cho báo cáo tháng nếu có nhiều giá trị
                             if len(filtered_df) > 1:
-                                pie_fig = px.pie(
-                                    filtered_df,
-                                    values='Thanh toán (KWh)',
-                                    names='Địa chỉ',
-                                    title='Tỷ lệ tiêu thụ điện theo địa điểm',
-                                    color_discrete_sequence=px.colors.qualitative.Set1,
-                                    hole=0.4
-                                )
-                                pie_fig.update_traces(textinfo='percent+label')
-
                                 pie_key = f"pie_{df_uuid}_{chart_counter}"
                                 chart_counter += 1
                                 st.plotly_chart(pie_fig, use_container_width=True, key=pie_key)
