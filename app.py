@@ -11,7 +11,6 @@ from xuat_file_excel import export_excel_formatted_fixed
 # Set page config
 st.set_page_config(
     page_title="Quản Lý Hạ Tầng Kỹ Thuật",
-    layout="wide",
     initial_sidebar_state="expanded"
 )
 
