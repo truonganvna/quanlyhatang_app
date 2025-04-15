@@ -3,7 +3,6 @@ import pandas as pd
 def bao_cao_tuan_electric(file_input):
     df = pd.read_excel(file_input, dtype={'STT': str}, skiprows=2)
     df = df.set_index("Địa chỉ")
-
     # I. Phần dịch vụ
     # Bảng FBS
     df_fbs = df.loc[["AS+ĐL FSB T12", "ĐH-Outdoor T12 (Mới)", "ĐH-Indoor CKTV (Mới)"]]
@@ -116,7 +115,6 @@ def bao_cao_tuan_electric(file_input):
         "%": ["", ""],
         "Thanh toán (KWh)": ["", ""]
     })
-
     df_mb_hoankiem_frame2["Tổng KWh"] = [(df_mb_hoankiem_frame2.iloc[i, 4] - df_mb_hoankiem_frame2.iloc[i, 5]) *
                                          df_mb_hoankiem_frame2.iloc[i, 6] for i in range(1)] + [""]
     df_mb_hoankiem_frame2_total = sum(

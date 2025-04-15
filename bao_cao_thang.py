@@ -227,7 +227,6 @@ def bao_cao_thang_electric(file_input):
     df_dv8_vp_frame.loc[18:25, "Tổng KWh"] = (df_dv8_vp_frame.loc[18:25, "CSCK"] - df_dv8_vp_frame.loc[18:25, "CSĐK"]) * df_dv8_vp_frame.loc[18:25, "Hệ số"]
     df_dv8_vp_frame.loc[18, "Thanh toán (KWh)"] = df_dv8_vp_frame.loc[18:25, "Tổng KWh"].sum()
 
-
     df_dv8_vp_frame_total_KWh = df_dv8_vp_frame.loc[1:2, "Tổng KWh"].sum() + df_dv8_vp_frame.loc[6:9, "Tổng KWh"].sum() + df_dv8_vp_frame.loc[11:12, "Tổng KWh"].sum() + \
                                 df_dv8_vp_frame.loc[18:25, "Tổng KWh"].sum() - df_dv8_vp_frame.loc[3, "Tổng KWh"] - df_dv8_vp_frame.loc[13:14, "Tổng KWh"].sum()
     df_dv8_vp_frame_total_thanhtoan = df_dv8_vp_frame.loc[1:3, "Tổng KWh"].sum() + df_dv8_vp_frame.loc[6:9, "Tổng KWh"].sum() + df_dv8_vp_frame.loc[11:16, "Tổng KWh"].sum() + df_dv8_vp_frame.loc[18:25, "Tổng KWh"].sum()
@@ -307,7 +306,6 @@ def bao_cao_thang_electric(file_input):
 
     df_vna8_vp_frame.loc[11, "Thanh toán (KWh)"] = df_vna8_vp_frame.loc[11:16, "Tổng KWh"].sum() + df_vna8_vp_frame.loc[18:25, "Tổng KWh"].sum()
 
-
     df_vna8_vp_frame_total_KWh = df_vna8_vp_frame.loc[1:2, "Tổng KWh"].sum() + df_vna8_vp_frame.loc[4, "Tổng KWh"].sum()
     df_vna8_vp_frame_total_thanhtoan = df_vna8_vp_frame.loc[1:3, "Tổng KWh"].sum() + df_vna8_vp_frame.loc[6:9, "Tổng KWh"].sum() + df_vna8_vp_frame.loc[11:16, "Tổng KWh"].sum() + df_vna8_vp_frame.loc[18:25, "Tổng KWh"].sum()
 
@@ -364,6 +362,7 @@ def bao_cao_thang_electric(file_input):
     df_vna8_frame
 
     sheet_dv_dict = {
+        "Dữ liệu nhập": [df],
         "MB1": [df_mb1_frame],
         "MB2": [df_mb2_frame],
         "Giovani1": [df_giovani1_frame],
@@ -373,8 +372,8 @@ def bao_cao_thang_electric(file_input):
         "FBS": [df_fsb_frame, df_fbs_old_frame]
     }
 
-
     titles_dv_dict = {
+        "Dữ liệu nhập": ["Dữ liệu tiêu thụ điện theo tháng TTXVN"],
         "MB1": ["Ngân hàng Thương mại cổ phần Quân đội, chi nhánh Hoàn Kiếm"],
         "MB2": ["Ngân hàng Thương mại cổ phần Quân đội, chi nhánh Hoàn Kiếm"],
         "Giovani1": ["GIOVANI"],
