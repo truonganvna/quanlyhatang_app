@@ -9,8 +9,7 @@ from bao_cao_thang import bao_cao_thang_electric
 from xuat_file_excel import export_excel_formatted_fixed
 
 # Set page config
-st.set_page_config(page_title="Quản Lý Hạ Tầng Kỹ Thuật")
-
+st.set_page_config(page_title="Quản Lý Hạ Tầng Kỹ Thuật", layout="wide")
 
 # Function to create consistent charts with a shared color map and consistent annotations
 def create_consistent_charts(df, category_col, value_col, title_prefix):
